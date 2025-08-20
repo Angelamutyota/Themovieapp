@@ -23,6 +23,14 @@ interface Movie {
   poster_path: string | null;
   vote_average: number;
   release_date: string;
+  backdrop_path?: string | null;
+  genre_ids?: number[];
+  popularity?: number;
+  original_language?: string;
+  original_title?: string;
+  adult?: boolean;
+  video?: boolean;
+  vote_count?: number;
 }
 
 interface PaginatedResponse {
@@ -42,6 +50,24 @@ interface MovieCredits {
   crew: { id: number; name: string; job: string }[];
 }
 
+// Fetch now playing movies with pagination
+export async function fetchNowPlayingMovies(page: number = 1): Promise<PaginatedResponse> {
+  const cacheKey = `now_playing-${page}`;
+  if (cache.has(cacheKey)) {
+    return cache.get(cacheKey);
+  }
+  try {
+    const response = await api.get<PaginatedResponse>('/movie/now_playing', {
+      params: { page },
+    });
+    cache.set(cacheKey, response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching now playing movies:', error);
+    throw error;
+  }
+}
+
 // Fetch popular movies with pagination
 export async function fetchPopularMovies(page: number = 1): Promise<PaginatedResponse> {
   const cacheKey = `popular-${page}`;
@@ -56,6 +82,42 @@ export async function fetchPopularMovies(page: number = 1): Promise<PaginatedRes
     return response.data;
   } catch (error) {
     console.error('Error fetching popular movies:', error);
+    throw error;
+  }
+}
+
+// Fetch top rated movies with pagination
+export async function fetchTopRatedMovies(page: number = 1): Promise<PaginatedResponse> {
+  const cacheKey = `top_rated-${page}`;
+  if (cache.has(cacheKey)) {
+    return cache.get(cacheKey);
+  }
+  try {
+    const response = await api.get<PaginatedResponse>('/movie/top_rated', {
+      params: { page },
+    });
+    cache.set(cacheKey, response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching top rated movies:', error);
+    throw error;
+  }
+}
+
+// Fetch upcoming movies with pagination
+export async function fetchUpcomingMovies(page: number = 1): Promise<PaginatedResponse> {
+  const cacheKey = `upcoming-${page}`;
+  if (cache.has(cacheKey)) {
+    return cache.get(cacheKey);
+  }
+  try {
+    const response = await api.get<PaginatedResponse>('/movie/upcoming', {
+      params: { page },
+    });
+    cache.set(cacheKey, response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching upcoming movies:', error);
     throw error;
   }
 }
