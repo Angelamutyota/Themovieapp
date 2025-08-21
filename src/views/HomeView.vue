@@ -76,7 +76,6 @@ interface MovieStore {
   loadUpcoming: () => Promise<void>;
   search: () => Promise<void>;
 }
-
 const movieStore = useMovieStore();
 
 onMounted(() => {

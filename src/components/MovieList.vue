@@ -4,7 +4,7 @@
     <div v-if="loading" class="flex justify-center">
       <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+<div class="grid grid-cols-2 md:grid-cols-5 gap-6">
       <div
         v-for="movie in movies"
         :key="movie.id"
@@ -14,29 +14,41 @@
         <img
           :src="movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/500x750'"
           alt="Movie Poster"
-          class="w-full h-96 object-cover rounded-t-lg"
+          class="w-full h-80 object-cover rounded-t-lg"
         />
         <div class="p-4">
-          <h3 class="text-lg font-semibold">{{ movie.title }}</h3>
-          <p class="text-gray-600 text-sm">{{ truncateOverview(movie.overview) }}</p>
+          <h3 class="text-lg font-semibold truncate">{{ movie.title }}</h3>
+          <p class="text-gray-600 text-xs line-clamp-3">{{ truncateOverview(movie.overview) }}</p>
         </div>
       </div>
     </div>
     <div class="flex justify-center mt-6">
-      <nav class="inline-flex gap-2">
-        <button
-          v-for="page in totalPages"
-          :key="page"
-          :class="[
-            'px-4 py-2 rounded-md',
-            currentPage === page ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-          ]"
-          @click="emit('update:page', page); fetchMovies()"
-        >
-          {{ page }}
-        </button>
-      </nav>
-    </div>
+  <nav class="inline-flex gap-2 items-center">
+    <!-- Previous -->
+    <button
+      class="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50"
+      :disabled="currentPage === 1"
+      @click="goToPage(currentPage - 1)"
+    >
+      Previous
+    </button>
+
+    <!-- Current page indicator -->
+    <span class="px-4 py-2 rounded-md bg-blue-500 text-gray-700">
+      Page {{ currentPage }} of {{ totalPages }}
+    </span>
+
+    <!-- Next -->
+    <button
+      class="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50"
+      :disabled="currentPage === totalPages"
+      @click="goToPage(currentPage + 1)"
+    >
+      Next
+    </button>
+  </nav>
+</div>
+
   </div>
 </template>
 
@@ -67,11 +79,15 @@ function truncateOverview(overview: string, maxLength: number = 100) {
   return overview.length > maxLength ? overview.slice(0, maxLength) + '...' : overview;
 }
 
-function fetchMovies() {
-  emit('update:page', currentPage.value);
-}
 
 function goToMovie(id: number) {
   router.push(`/movie/${id}`);
 }
+
+function goToPage(page: number) {
+  if (page >= 1 && page <= props.totalPages) {
+    emit('update:page', page);
+  }
+}
+
 </script>
