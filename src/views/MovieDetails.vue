@@ -1,36 +1,38 @@
 <template>
-  <v-container>
-    <v-progress-linear v-if="loading" indeterminate color="primary" />
-    <v-row v-if="movie">
-      <v-col cols="12" md="4">
-        <v-img
+  <div class="container mx-auto px-4 py-6">
+    <div v-if="loading" class="flex justify-center">
+      <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+    </div>
+    <div v-if="movie" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div>
+        <img
           :src="movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/500x750'"
-          aspect-ratio="2/3"
-          cover
+          alt="Movie Poster"
+          class="w-full h-96 object-cover rounded-lg"
         />
-      </v-col>
-      <v-col cols="12" md="8">
-        <h1>{{ movie.title }}</h1>
-        <p><strong>Overview:</strong> {{ movie.overview }}</p>
-        <p><strong>Rating:</strong> {{ movie.vote_average }} / 10</p>
-        <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
-        <p><strong>Runtime:</strong> {{ movie.runtime ? `${movie.runtime} minutes` : 'N/A' }}</p>
-        <!-- <p><strong>Genres:</strong> {{ movie.genres?.map(g => g.name).join(', ') }}</p> -->
-        <h3>Cast</h3>
-        <v-list>
-          <v-list-item v-for="actor in credits.cast.slice(0, 5)" :key="actor.id">
+      </div>
+      <div class="md:col-span-2">
+        <h1 class="text-3xl font-bold mb-4">{{ movie.title }}</h1>
+        <p class="mb-2"><strong>Overview:</strong> {{ movie.overview }}</p>
+        <p class="mb-2"><strong>Rating:</strong> {{ movie.vote_average }} / 10</p>
+        <p class="mb-2"><strong>Release Date:</strong> {{ movie.release_date }}</p>
+        <p class="mb-2"><strong>Runtime:</strong> {{ movie.runtime ? `${movie.runtime} minutes` : 'N/A' }}</p>
+        <p class="mb-4"><strong>Genres:</strong> {{ movie.genres?.map((g: { name: any; }) => g.name).join(', ') }}</p>
+        <h3 class="text-xl font-semibold mb-2">Cast</h3>
+        <ul class="list-disc pl-5 mb-4">
+          <li v-for="actor in credits.cast.slice(0, 5)" :key="actor.id" class="text-gray-700">
             {{ actor.name }} as {{ actor.character }}
-          </v-list-item>
-        </v-list>
-        <h3>Crew</h3>
-        <v-list>
-          <v-list-item v-for="member in credits.crew.slice(0, 5)" :key="member.id">
+          </li>
+        </ul>
+        <h3 class="text-xl font-semibold mb-2">Crew</h3>
+        <ul class="list-disc pl-5">
+          <li v-for="member in credits.crew.slice(0, 5)" :key="member.id" class="text-gray-700">
             {{ member.name }} ({{ member.job }})
-          </v-list-item>
-        </v-list>
-      </v-col>
-    </v-row>
-  </v-container>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
