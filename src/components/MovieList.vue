@@ -1,6 +1,6 @@
 <template>
-  <div class="container mx-auto px-4 py-6">
-    <h2 class="text-2xl font-bold mb-4">{{ title }}</h2>
+<div class="w-full min-h-screen px-4 py-6 bg-blue-800">
+    <h2 class="text-2xl font-bold mb-4 bg-blue-900 ">{{ title }}</h2>
     <div v-if="loading" class="flex justify-center">
       <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
     </div>
@@ -8,7 +8,7 @@
       <div
         v-for="movie in movies"
         :key="movie.id"
-        class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer"
+        class="bg-blue-600 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer"
         @click="goToMovie(movie.id)"
       >
         <img
@@ -18,7 +18,7 @@
         />
         <div class="p-4">
           <h3 class="text-lg font-semibold truncate">{{ movie.title }}</h3>
-          <p class="text-gray-600 text-xs line-clamp-3">{{ truncateOverview(movie.overview) }}</p>
+          <p class="text-white text-xs line-clamp-3">{{ truncateOverview(movie.overview) }}</p>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto px-4 py-6">
+  <div class="container mx-auto px-4 py-6 ">
     <div class="relative mb-6">
       <input
         v-model="movieStore.searchQuery"
@@ -27,20 +27,7 @@
         class="absolute right-3 top-3 text-gray-500 hover:text-gray-700"
         @click="movieStore.searchQuery = ''"
       >
-        <!-- <svg
-          class="h-2 w-2"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg> -->
+        search
       </button>
     </div>
     <div v-if="movieStore.searchResults.loading" class="flex justify-center">
