@@ -1,3 +1,4 @@
+.env
 # Logs
 logs
 *.log
@@ -31,4 +32,3 @@ coverage
 
 test-results/
 playwright-report/
-.env
