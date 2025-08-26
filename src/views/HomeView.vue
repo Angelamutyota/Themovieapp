@@ -1,7 +1,9 @@
 <template>
     <div class="w-full min-h-screen bg-blue-800">
+<NavBar />
+
   <div class="container mx-auto px-4 py-6 ">
-    <h1 class="text-3xl font-bold mb-6">Movie Recommendations</h1>
+    <h1 class="text-3xl font-bold mb-6 text-white">Movie Recommendations</h1>
     <SearchBar />
     <div v-if="movieStore.nowPlaying.error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
       {{ movieStore.nowPlaying.error }}
@@ -56,6 +58,10 @@ import { onMounted } from 'vue';
 import { useMovieStore } from '../stores/movieStore';
 import MovieList from '../components/MovieList.vue';
 import SearchBar from '@/components/SearchBar.vue';
+import NavBar from '@/components/NavBar.vue';
+
+import { useAuthStore } from '@/stores/auth';
+const authStore = useAuthStore();
 
 interface MovieCategory {
   movies: any[];

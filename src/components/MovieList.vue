@@ -1,6 +1,6 @@
 <template>
 <div class="w-full min-h-screen px-4 py-6 bg-blue-800">
-    <h2 class="text-2xl font-bold mb-4 bg-blue-900 ">{{ title }}</h2>
+    <h2 class="text-2xl font-bold mb-4 bg-blue-900 text-white">{{ title }}</h2>
     <div v-if="loading" class="flex justify-center">
       <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
     </div>
@@ -17,14 +17,13 @@
           class="w-full h-80 object-cover rounded-t-lg"
         />
         <div class="p-4">
-          <h3 class="text-lg font-semibold truncate">{{ movie.title }}</h3>
+          <h3 class="text-lg font-semibold truncate text-white">{{ movie.title }}</h3>
           <p class="text-white text-xs line-clamp-3">{{ truncateOverview(movie.overview) }}</p>
         </div>
       </div>
     </div>
     <div class="flex justify-center mt-6">
   <nav class="inline-flex gap-2 items-center">
-    <!-- Previous -->
     <button
       class="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50"
       :disabled="currentPage === 1"
@@ -33,12 +32,10 @@
       Previous
     </button>
 
-    <!-- Current page indicator -->
     <span class="px-4 py-2 rounded-md bg-blue-500 text-gray-700">
       Page {{ currentPage }} of {{ totalPages }}
     </span>
 
-    <!-- Next -->
     <button
       class="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50"
       :disabled="currentPage === totalPages"
