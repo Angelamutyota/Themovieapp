@@ -10,7 +10,5 @@ async function handleLogout() {
 </script>
 
 <template>
-  <button @click="handleLogout" class="bg-red-500 text-white p-2 rounded">
-    Logout
-  </button>
+  <button @click="handleLogout" class="bg-red-500 text-white p-2 rounded">Logout</button>
 </template>
