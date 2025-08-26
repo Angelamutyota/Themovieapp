@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto px-4 py-6">
+  <div class="container mx-auto px-4 py-6 ">
     <div class="relative mb-6">
       <input
         v-model="movieStore.searchQuery"
@@ -8,39 +8,13 @@
         class="w-full p-3 pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         @input="debouncedSearch"
       />
-      <!-- <svg
-        class="absolute left-3 top-3 h-2 w-2 text-gray-500"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-        />
-      </svg> -->
+     
       <button
         v-if="movieStore.searchQuery"
         class="absolute right-3 top-3 text-gray-500 hover:text-gray-700"
         @click="movieStore.searchQuery = ''"
       >
-        <!-- <svg
-          class="h-2 w-2"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg> -->
+        search
       </button>
     </div>
     <div v-if="movieStore.searchResults.loading" class="flex justify-center">
@@ -50,7 +24,7 @@
       <div
         v-for="movie in movieStore.searchResults.movies"
         :key="movie.id"
-        class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer"
+        class="bg-blue-600 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer"
         @click="goToMovie(movie.id)"
       >
         <img
@@ -59,23 +33,29 @@
           class="w-full h-96 object-cover rounded-t-lg"
         />
         <div class="p-4">
-          <h3 class="text-lg font-semibold">{{ movie.title }}</h3>
-          <p class="text-gray-600 text-sm">{{ truncateOverview(movie.overview) }}</p>
+          <h3 class="text-lg text-white font-semibold">{{ movie.title }}</h3>
+          <p class="text-white text-sm">{{ truncateOverview(movie.overview) }}</p>
         </div>
       </div>
     </div>
-    <div v-if="movieStore.searchResults.totalPages > 1" class="flex justify-center mt-6">
-      <nav class="inline-flex gap-2">
+  <div v-if="movieStore.searchResults.totalPages > 1" class="flex justify-center mt-6">
+      <nav class="inline-flex gap-2 items-center">
         <button
-          v-for="page in movieStore.searchResults.totalPages"
-          :key="page"
-          :class="[
-            'px-4 py-2 rounded-md',
-            movieStore.searchResults.page === page ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-          ]"
-          @click="movieStore.searchResults.page = page; movieStore.search()"
+          class="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50"
+          :disabled="movieStore.searchResults.page === 1"
+          @click="goToPage(movieStore.searchResults.page - 1)"
         >
-          {{ page }}
+          Previous
+        </button>
+        <span class="px-4 py-2 rounded-md bg-blue-500 text-white">
+          Page {{ movieStore.searchResults.page }} of {{ movieStore.searchResults.totalPages }}
+        </span>
+        <button
+          class="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50"
+          :disabled="movieStore.searchResults.page === movieStore.searchResults.totalPages"
+          @click="goToPage(movieStore.searchResults.page + 1)"
+        >
+          Next
         </button>
       </nav>
     </div>
@@ -100,5 +80,12 @@ function truncateOverview(overview: string, maxLength: number = 100) {
 
 function goToMovie(id: number) {
   router.push(`/movie/${id}`);
+}
+
+function goToPage(page: number) {
+  if (page >= 1 && page <= movieStore.searchResults.totalPages) {
+    movieStore.searchResults.page = page;
+    movieStore.search();
+  }
 }
 </script>
