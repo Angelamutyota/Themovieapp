@@ -10,6 +10,6 @@ describe('Auth Store', () => {
   it('logs in successfully', async () => {
     const store = useAuthStore();
     await store.login('amutyota@gmail.com', 'Pass@word1');
-    expect(store.user).not.toBeNull();  
+    expect(store.user).not.toBeNull();
   });
 });

@@ -1,5 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { fetchNowPlayingMovies, fetchPopularMovies, fetchTopRatedMovies, fetchUpcomingMovies } from './api';
+import {
+  fetchNowPlayingMovies,
+  fetchPopularMovies,
+  fetchTopRatedMovies,
+  fetchUpcomingMovies,
+} from './api';
 import axios from 'axios';
 
 // Mock the axios module
@@ -24,15 +29,15 @@ describe('apiService', () => {
     const mockData = {
       page: 1,
       results: [
-        { 
-            id: 1, 
-            title: 'Test Movie', 
-            overview: 'Test', 
-            poster_path: '/test.jpg', 
-            vote_average: 7.0, 
-            release_date: '2025-01-01'
-         }
-        ],
+        {
+          id: 1,
+          title: 'Test Movie',
+          overview: 'Test',
+          poster_path: '/test.jpg',
+          vote_average: 7.0,
+          release_date: '2025-01-01',
+        },
+      ],
       total_pages: 10,
       total_results: 100,
     };
@@ -41,7 +46,9 @@ describe('apiService', () => {
 
     const result = await fetchNowPlayingMovies(1);
     expect(result).toEqual(mockData);
-    expect(mockAxiosInstance.get).toHaveBeenCalledWith('/movie/now_playing', { params: { page: 1 } });
+    expect(mockAxiosInstance.get).toHaveBeenCalledWith('/movie/now_playing', {
+      params: { page: 1 },
+    });
   });
 
   it('fetches popular movies', async () => {
@@ -71,19 +78,19 @@ describe('apiService', () => {
     });
   });
 
-   it('fetches top rated movies', async () => {
+  it('fetches top rated movies', async () => {
     const mockData = {
       page: 1,
       results: [
-        { 
-            id: 1, 
-            title: 'Test Movie', 
-            overview: 'Test', 
-            poster_path: '/test.jpg', 
-            vote_average: 7.0, 
-            release_date: '2025-01-01' 
-        }
-    ],
+        {
+          id: 1,
+          title: 'Test Movie',
+          overview: 'Test',
+          poster_path: '/test.jpg',
+          vote_average: 7.0,
+          release_date: '2025-01-01',
+        },
+      ],
       total_pages: 10,
       total_results: 100,
     };
@@ -99,15 +106,15 @@ describe('apiService', () => {
     const mockData = {
       page: 1,
       results: [
-        { 
-            id: 1, 
-            title: 'Test Movie', 
-            overview: 'Test', 
-            poster_path: '/test.jpg', 
-            vote_average: 7.0, 
-            release_date: '2025-01-01' 
-        }
-    ],
+        {
+          id: 1,
+          title: 'Test Movie',
+          overview: 'Test',
+          poster_path: '/test.jpg',
+          vote_average: 7.0,
+          release_date: '2025-01-01',
+        },
+      ],
       total_pages: 10,
       total_results: 100,
     };

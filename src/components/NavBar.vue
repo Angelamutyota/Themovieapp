@@ -9,10 +9,7 @@ const authStore = useAuthStore();
 <template>
   <nav class="w-full flex justify-between items-center p-4 bg-blue-900 text-white">
     <!-- Left side: Home link -->
-    <RouterLink
-      to="/"
-      class="text-lg font-semibold hover:text-blue-300 transition"
-    >
+    <RouterLink to="/" class="text-lg font-semibold hover:text-blue-300 transition">
       Movie App
     </RouterLink>
 

@@ -6,8 +6,13 @@ import { useAuthStore } from '@/stores/auth';
 
 const routes = [
   { path: '/', name: 'Home', component: HomeView },
-  { path: '/movie/:id', name: 'MovieDetails', component: MovieDetails, meta: { requiresAuth: true } },
-  { path: '/login', name: 'login', component: LoginForm }
+  {
+    path: '/movie/:id',
+    name: 'MovieDetails',
+    component: MovieDetails,
+    meta: { requiresAuth: true },
+  },
+  { path: '/login', name: 'login', component: LoginForm },
 ];
 
 const router = createRouter({

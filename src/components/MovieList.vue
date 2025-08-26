@@ -1,10 +1,10 @@
 <template>
-<div class="w-full min-h-screen px-4 py-6 bg-blue-800">
+  <div class="w-full min-h-screen px-4 py-6 bg-blue-800">
     <h2 class="text-2xl font-bold mb-4 bg-blue-900 text-white">{{ title }}</h2>
     <div v-if="loading" class="flex justify-center">
       <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
     </div>
-<div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
       <div
         v-for="movie in movies"
         :key="movie.id"
@@ -12,7 +12,11 @@
         @click="goToMovie(movie.id)"
       >
         <img
-          :src="movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'https://via.placeholder.com/500x750'"
+          :src="
+            movie.poster_path
+              ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+              : 'https://via.placeholder.com/500x750'
+          "
           alt="Movie Poster"
           class="w-full h-80 object-cover rounded-t-lg"
         />
@@ -23,29 +27,28 @@
       </div>
     </div>
     <div class="flex justify-center mt-6">
-  <nav class="inline-flex gap-2 items-center">
-    <button
-      class="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50"
-      :disabled="currentPage === 1"
-      @click="goToPage(currentPage - 1)"
-    >
-      Previous
-    </button>
+      <nav class="inline-flex gap-2 items-center">
+        <button
+          class="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50"
+          :disabled="currentPage === 1"
+          @click="goToPage(currentPage - 1)"
+        >
+          Previous
+        </button>
 
-    <span class="px-4 py-2 rounded-md bg-blue-500 text-gray-700">
-      Page {{ currentPage }} of {{ totalPages }}
-    </span>
+        <span class="px-4 py-2 rounded-md bg-blue-500 text-gray-700">
+          Page {{ currentPage }} of {{ totalPages }}
+        </span>
 
-    <button
-      class="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50"
-      :disabled="currentPage === totalPages"
-      @click="goToPage(currentPage + 1)"
-    >
-      Next
-    </button>
-  </nav>
-</div>
-
+        <button
+          class="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50"
+          :disabled="currentPage === totalPages"
+          @click="goToPage(currentPage + 1)"
+        >
+          Next
+        </button>
+      </nav>
+    </div>
   </div>
 </template>
 
@@ -76,7 +79,6 @@ function truncateOverview(overview: string, maxLength: number = 100) {
   return overview.length > maxLength ? overview.slice(0, maxLength) + '...' : overview;
 }
 
-
 function goToMovie(id: number) {
   router.push(`/movie/${id}`);
 }
@@ -86,5 +88,4 @@ function goToPage(page: number) {
     emit('update:page', page);
   }
 }
-
 </script>

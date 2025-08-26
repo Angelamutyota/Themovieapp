@@ -1,6 +1,12 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { fetchNowPlayingMovies, fetchPopularMovies, fetchTopRatedMovies, fetchUpcomingMovies, searchMovies } from '../services/api';
+import {
+  fetchNowPlayingMovies,
+  fetchPopularMovies,
+  fetchTopRatedMovies,
+  fetchUpcomingMovies,
+  searchMovies,
+} from '../services/api';
 
 interface MovieCategory {
   movies: any[];
@@ -8,15 +14,44 @@ interface MovieCategory {
   totalPages: number;
   loading: boolean;
   error: string | null;
-
 }
 
 export const useMovieStore = defineStore('movie', () => {
-  const nowPlaying = ref<MovieCategory>({ movies: [], page: 1, totalPages: 1, loading: false, error: null });
-  const popular = ref<MovieCategory>({ movies: [], page: 1, totalPages: 1, loading: false, error: null });
-  const topRated = ref<MovieCategory>({ movies: [], page: 1, totalPages: 1, loading: false, error: null });
-  const upcoming = ref<MovieCategory>({ movies: [], page: 1, totalPages: 1, loading: false, error: null });
-  const searchResults = ref<MovieCategory>({ movies: [], page: 1, totalPages: 1, loading: false, error: null });
+  const nowPlaying = ref<MovieCategory>({
+    movies: [],
+    page: 1,
+    totalPages: 1,
+    loading: false,
+    error: null,
+  });
+  const popular = ref<MovieCategory>({
+    movies: [],
+    page: 1,
+    totalPages: 1,
+    loading: false,
+    error: null,
+  });
+  const topRated = ref<MovieCategory>({
+    movies: [],
+    page: 1,
+    totalPages: 1,
+    loading: false,
+    error: null,
+  });
+  const upcoming = ref<MovieCategory>({
+    movies: [],
+    page: 1,
+    totalPages: 1,
+    loading: false,
+    error: null,
+  });
+  const searchResults = ref<MovieCategory>({
+    movies: [],
+    page: 1,
+    totalPages: 1,
+    loading: false,
+    error: null,
+  });
   const searchQuery = ref<string>('');
 
   async function loadNowPlaying() {
@@ -89,7 +124,6 @@ export const useMovieStore = defineStore('movie', () => {
     }
     searchResults.value.loading = false;
   }
-
 
   return {
     nowPlaying,
